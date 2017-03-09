@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <h1>Admin Panel</h1>
+  </div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'useradmin/partial_admin_menu.html' with active='approve' %}
+    </div>
+    <div class="col-md-9">
+        <h3 style="margin-top: 0">Approve New Accounts</h3>
+        <section class="profiles">
+            {% for profile in unapproved_profiles %}
+            <div class="profile">
+                <h2><a href="{% url 'profile' profile.user.username%}">{{profile.name}}</a></h2>
+            </div>
+            {% endfor %}
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=unapproved_profiles %}
+            </div>
+        </div>
+    </div>
+    </div>
+    {% endblock main %}

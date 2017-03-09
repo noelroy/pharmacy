@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}{{ page_user.profile.get_screen_name }}{% endblock %}
+
+{% block head %}
+  <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+  <script src="{% static 'js/profile.js' %}"></script>
+{% endblock head %}
+
+{% block main %}
+<div class="row">
+  <div class="page-header col-md-10">
+    <h1>{{ page_user.profile.get_screen_name }} {% if page_user.get_full_name %}<small>({{ page_user.username }})</small>{% endif %}</h1>
+    </div>
+  <div id="approve" class="col-md-2" style="margin-top:5em;">
+    {%if request.user.is_staff%}
+    {% if not page_user.profile.approved %}
+
+      <button type="button" id="approvebtn" class="btn btn-primary btn-lg" username="{{page_user.username}}" csrf="{{ csrf_token }}">Approve</button>
+
+    {% else %}
+      <span class="glyphicon glyphicon-check"></span>Approved
+    {% endif %}
+    {% endif %}
+    </div>
+
+  </div>
+  <div class="profile">
+    <div class="row">
+      <div class="col-md-3 user-profile">
+        <img src="{{ page_user.profile.get_picture }}" class="picture">
+      </div>
+      <div class="col-md-9 user-profile">
+        <ul>
+          <li>{{page_user.profile.type}}</li>
+          <li>{{page_user.profile.name}}</li>
+          <li>{{page_user.profile.license_id}}</li>
+          <li>{{page_user.profile.address.line1}}</li>
+          <li>{{page_user.profile.address.line2}}</li>
+          <li>{{page_user.profile.address.city}}</li>
+          <li>{{page_user.profile.address.state}}</li>
+          <li>{{page_user.profile.address.country}}</li>
+          <li>{{page_user.profile.address.pincode}}</li>
+          <li>{{page_user.profile.address.contactno}}</li>
+          <li>{{page_user.profile.address.email}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock main %}

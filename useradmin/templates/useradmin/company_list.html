@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <h1>Admin Panel</h1>
+  </div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'useradmin/partial_admin_menu.html' with active='company' %}
+    </div>
+    <div class="col-md-9">
+        <h3 style="margin-top: 0">Company list</h3>
+        <section class="profiles">
+            {% for company in companies %}
+            <div class="shop">
+                <h2><a href="{% url 'profile' company.user.username%}">{{company.name}}-{{company.license_id}}</a></h2>
+            </div>
+            {% endfor %}
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=companies %}
+            </div>
+        </div>
+    </div>
+    </div>
+    {% endblock main %}

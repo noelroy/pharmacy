@@ -1,0 +1,4 @@
+<div class="list-group">
+  <a href="{% url 'company_home' %}" class="list-group-item{% if active == 'home' %} active{% endif %}">Home</a>
+  <a href="{% url 'add_stock_company' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">Add Stock</a>
+</div>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %} Admin {% endblock %}
+
+{% block head %}
+<link href="{% static 'css/usershop.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <h1>Shop Heading</h1>
+  </div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'usershop/partial_shop_menu.html' with active='approve' %}
+    </div>
+    <div class="col-md-9">
+
+    </div>
+    </div>
+    {% endblock main %}

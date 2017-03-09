@@ -1,0 +1,9 @@
+.profile {
+  padding-bottom: 1.4em;
+  border-bottom: 1px solid #eeeeee;
+  margin-top: 2.4em;
+}
+
+.profiles .profile:last-child {
+  border-bottom: none;
+}

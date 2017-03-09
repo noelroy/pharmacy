@@ -1,0 +1,4 @@
+Django
+Pillow
+django-cleanup
+bleach
