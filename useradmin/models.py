@@ -7,8 +7,13 @@ class Medicine(models.Model):
     details = models.TextField(max_length=500)
 
 
-class Meta:
-    db_table = 'medicine'
+    class Meta:
+        db_table = 'medicine'
 
-def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def get_medicines():
+        medicines = Medicine.objects.all()
+        return medicines

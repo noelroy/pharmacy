@@ -54,6 +54,17 @@ class Profile(models.Model):
         except:
             return self.user.username
 
+    def get_type(self):
+        try:
+            if self.user.profile.type == Profile.COMPANY:
+                return 'Company'
+            elif self.user.profile.type == Profile.SHOP:
+                return 'Shop'
+            else:
+                return 'Admin'
+        except:
+            return ''
+
     @staticmethod
     def get_unapproved():
         profiles = Profile.objects.filter(approved = False,user__is_staff = False).exclude(name__isnull=True).exclude(name__exact='')

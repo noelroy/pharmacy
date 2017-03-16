@@ -33,19 +33,19 @@
         <img src="{{ page_user.profile.get_picture }}" class="picture">
       </div>
       <div class="col-md-9 user-profile">
-        <ul>
-          <li>{{page_user.profile.type}}</li>
-          <li>{{page_user.profile.name}}</li>
-          <li>{{page_user.profile.license_id}}</li>
-          <li>{{page_user.profile.address.line1}}</li>
-          <li>{{page_user.profile.address.line2}}</li>
-          <li>{{page_user.profile.address.city}}</li>
-          <li>{{page_user.profile.address.state}}</li>
-          <li>{{page_user.profile.address.country}}</li>
-          <li>{{page_user.profile.address.pincode}}</li>
-          <li>{{page_user.profile.address.contactno}}</li>
-          <li>{{page_user.profile.address.email}}</li>
-        </ul>
+        <address>
+          {{page_user.profile.get_type}}<br>
+          {{page_user.profile.name}}<br>
+          {{page_user.profile.license_id}}<br>
+          {{page_user.profile.address.line1}}<br>
+          {{page_user.profile.address.line2}}<br>
+          {{page_user.profile.address.city}}<br>
+          {{page_user.profile.address.state}}<br>
+          {{page_user.profile.address.country}}<br>
+          {{page_user.profile.address.pincode}}<br>
+          {{page_user.profile.address.contactno}}<br>
+          {{page_user.profile.address.email}}<br>
+        </address>
       </div>
     </div>
   </div>

@@ -46,6 +46,9 @@ urlpatterns = [
 #company url
     url(r'^usercompany/', include('usercompany.urls')),
 
+#shop url
+    url(r'^usershop/', include('usershop.urls')),
+
     url(r'^user/(?P<username>[^/]+)/$', core_views.profile, name='profile'),
 ]
 

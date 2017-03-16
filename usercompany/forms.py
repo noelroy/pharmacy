@@ -9,7 +9,7 @@ class StockForm(forms.ModelForm):
         required=True,
         )
     exp_date = forms.DateField(
-        widget=forms.SelectDateWidget(attrs={'class': 'form-control'}),
+        widget=forms.SelectDateWidget(attrs={'class': 'form-control d-inline'}),
         required=True
     )
 

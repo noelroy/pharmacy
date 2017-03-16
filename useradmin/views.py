@@ -7,6 +7,7 @@ from pharmacy.decorators import ajax_required
 from django.contrib.auth.models import User
 from useradmin.forms import MedicineForm
 from django.contrib import messages
+from useradmin.models import Medicine
 # Create your views here.
 
 @login_required
@@ -45,6 +46,19 @@ def add_medicine(request):
     else:
         form = MedicineForm()
     return render(request, 'useradmin/add_medicine.html', {'form': form})
+
+@login_required
+def view_medicines(request):
+    medicines = Medicine.get_medicines()
+    paginator = Paginator(medicines, 10)
+    page = request.GET.get('page')
+    try:
+        medicines = paginator.page(page)
+    except PageNotAnInteger:
+        medicines = paginator.page(1)
+    except EmptyPage:
+        medicines = paginator.page(paginator.num_pages)
+    return render(request, 'useradmin/view_medicines.html', {'medicines': medicines})
 
 @login_required
 def shop(request):

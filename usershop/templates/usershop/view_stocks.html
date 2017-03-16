@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Shop Panel{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <h1>Shop Panel</h1>
+</div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'usershop/partial_shop_menu.html' with active='shop' %}
+    </div>
+    <div class="col-md-9">
+        <h3 style="margin-top: 0">Stocks</h3>
+        <section class="stocks">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>medicine</th>
+                    <th>exp_date</th>
+                    <th>price</th>
+                    <th>Available</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stock in stocks %}
+
+                <tr>
+                    <th scope="row">{{stock.pk}}</th>
+                    <td>{{stock.medicine.name}}</td>
+                    <td>{{stock.exp_date}}</td>
+                    <td>{{stock.price}}</td>
+                    <td>{{stock.get_available}}</td>
+                    <td>
+                        <a href="{% url 'edit_stock_shop' pk=stock.pk %}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp; Edit
+                        </a>
+                        <a href="{% url 'delete_stock_shop' pk=stock.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Delete
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=stocks %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 
-{% block title %} Admin {% endblock %}
+{% block title %} Shop Panel {% endblock %}
 
 {% block head %}
 <link href="{% static 'css/usershop.css' %}" rel="stylesheet">
@@ -10,11 +10,11 @@
 
 {% block main %}
 <div class="page-header">
-    <h1>Shop Heading</h1>
+    <h1>Shop Panel</h1>
   </div>
 <div class="row" style="margin-top: 2em">
     <div class="col-md-3">
-        {% include 'usershop/partial_shop_menu.html' with active='approve' %}
+        {% include 'usershop/partial_shop_menu.html' with active='home' %}
     </div>
     <div class="col-md-9">
 

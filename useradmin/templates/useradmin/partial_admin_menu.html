@@ -1,6 +1,9 @@
 <div class="list-group">
   <a href="{% url 'admin_home'%}" class="list-group-item{% if active == 'approve' %} active{% endif %}">Approve Profiles</a>
-  <a href="{% url 'add_medicine'%}" class="list-group-item{% if active == 'medicine' %} active{% endif %}">Medicine</a>
+  <a href="{% url 'add_medicine'%}" class="list-group-item{% if active == 'add_medicine' %} active{% endif %}">Add Medicine</a>
+  <a href="{% url 'view_medicines'%}" class="list-group-item{% if active == 'view_medicine' %} active{% endif %}">View Medicines</a>
+
+
   <a href="{% url 'admin_shop_list'%}" class="list-group-item{% if active == 'shop' %} active{% endif %}">Shop List</a>
   <a href="{% url 'admin_company_list'%}" class="list-group-item{% if active == 'company' %} active{% endif %}">Company List</a>
 </div>
