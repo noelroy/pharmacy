@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %} Search {% endblock %}
+{% block search_active %} active {% endblock %}
+
+{% block head %}
+<!--<link href="{% static 'css/search.css' %}" rel="stylesheet">
+<script src="{% static 'js/search.js' %}"></script>-->
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-3">
+            <h1>Search</h1>
+        </div>
+        <div class="col-md-9">
+            <form role="search" action="{% url 'search' %}">
+                <input type="hidden" name="type" value="{{ active }}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Search" value="{{ querystring }}">
+                    <span class="input-group-btn">
+              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row results">
+    <h2>Institutions</h2>
+    {% if results %}
+    <ul class="users-results">
+        {% for result in results %}
+        <li username="{{ result.name }}">
+            <h5>
+                <img src="{{ user_result.profile.get_picture }}" class="result-user">
+                <a href="{% url 'profile' result.user.username %}">
+                    {{ result.name }}
+                    <small>({{ result.user.username }})</small>
+                </a>
+            </h5>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <h4 class="no-result">No institution found :(</h4>
+    {% endif %}
+</div>
+{% endblock main %}

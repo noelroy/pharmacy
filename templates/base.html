@@ -39,12 +39,16 @@
             <div class="collapse navbar-collapse" id="menu">
 
                 <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
                     <li>
                         <a href="#" id="notifications" data-container="body" data-toggle="popover"
                            data-placement="bottom" title="Notifications">
                             <span class="glyphicon glyphicon-bell"></span>
                         </a>
                     </li>
+                    {% endif %}
+                    <li class="{% block search_active %}{% endblock %}"><a
+                            href="{% url 'search' %}">Search</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

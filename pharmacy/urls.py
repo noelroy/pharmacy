@@ -20,6 +20,7 @@ from core import views as core_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from search import views as search_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -48,6 +49,8 @@ urlpatterns = [
 
 #shop url
     url(r'^usershop/', include('usershop.urls')),
+
+    url(r'^search/$', search_views.search, name='search'),
 
     url(r'^user/(?P<username>[^/]+)/$', core_views.profile, name='profile'),
 ]
