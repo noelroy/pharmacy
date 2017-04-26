@@ -32,6 +32,10 @@ def add_stock(request):
 @login_required
 def view_stocks(request):
     stocks = ShopStock.objects.filter(profile = request.user.profile)
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        stocks = stocks.filter(medicine__name__icontains=querystring)
     paginator = Paginator(stocks, 10)
     page = request.GET.get('page')
     try:
@@ -40,7 +44,24 @@ def view_stocks(request):
         stocks = paginator.page(1)
     except EmptyPage:
         stocks = paginator.page(paginator.num_pages)
-    return render(request, 'usershop/view_stocks.html', {'stocks': stocks})
+    return render(request, 'usershop/view_stocks.html', {'stocks': stocks, 'querystring': querystring})
+
+@login_required
+def view_avail_stocks(request):
+    stocks = request.user.profile.get_avail_med()
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        stocks = stocks.filter(medicine__name__icontains=querystring)
+    paginator = Paginator(stocks, 10)
+    page = request.GET.get('page')
+    try:
+        stocks = paginator.page(page)
+    except PageNotAnInteger:
+        stocks = paginator.page(1)
+    except EmptyPage:
+        stocks = paginator.page(paginator.num_pages)
+    return render(request, 'usershop/view_avail_stocks.html', {'stocks': stocks, 'querystring': querystring})
 
 
 @login_required
@@ -63,3 +84,4 @@ def delete_stock(request, pk):
     stock = ShopStock.objects.get(pk=pk)
     stock.delete()
     return redirect('view_stock_shop')
+

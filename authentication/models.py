@@ -8,6 +8,7 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.db.models import Sum
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -65,6 +66,18 @@ class Profile(models.Model):
         except:
             return ''
 
+    def get_avail_med(self):
+        from usershop.models import ShopStock
+        from usercompany.models import CompanyStock
+        if(self.get_type()=='Shop'):
+            stock = ShopStock.objects.filter(profile=self).values('medicine','medicine__name').annotate(mcount=(Sum('quantity') - Sum('sold')))
+            return stock
+        elif(self.get_type()=='Company'):
+            stock = CompanyStock.objects.filter(profile=self).values('medicine','medicine__name').annotate(mcount=(Sum('quantity') - Sum('sold')))
+            return stock
+        else:
+            return ''
+
     @staticmethod
     def get_unapproved():
         profiles = Profile.objects.filter(approved = False,user__is_staff = False).exclude(name__isnull=True).exclude(name__exact='')
@@ -90,6 +103,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
 
 class Address(models.Model):
     profile = models.OneToOneField(

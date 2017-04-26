@@ -13,6 +13,9 @@ class Medicine(models.Model):
     def __str__(self):
         return self.name
 
+    def get_name(self):
+        return self.name
+
     @staticmethod
     def get_medicines():
         medicines = Medicine.objects.all()
