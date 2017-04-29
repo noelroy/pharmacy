@@ -50,6 +50,8 @@ urlpatterns = [
 #shop url
     url(r'^usershop/', include('usershop.urls')),
 
+    url(r'^activities/', include('activities.urls')),
+
     url(r'^search/$', search_views.search, name='search'),
 
     url(r'^user/(?P<username>[^/]+)/$', core_views.profile, name='profile'),

@@ -5,6 +5,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from usercompany.forms import StockForm
 from django.contrib import messages
 from usercompany.models import CompanyStock
+from activities.models import Order
 # Create your views here.
 
 @login_required
@@ -83,3 +84,27 @@ def delete_stock(request, pk):
     stock = CompanyStock.objects.get(pk=pk)
     stock.delete()
     return redirect('view_stock_company')
+
+@login_required
+def view_orders(request):
+    orders = Order.objects.filter(to_user = request.user.profile).order_by('approval')
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        orders = orders.filter(from_user__name__icontains=querystring)
+    paginator = Paginator(orders, 10)
+    page = request.GET.get('page')
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        orders = paginator.page(1)
+    except EmptyPage:
+        orders = paginator.page(paginator.num_pages)
+    return render(request, 'usercompany/view_orders.html', {'orders': orders, 'querystring': querystring})
+
+@login_required
+def decline_order(request, pk):
+    stock = Order.objects.get(pk=pk)
+    stock.approval = False
+    stock.save()
+    return redirect('view_order_company')

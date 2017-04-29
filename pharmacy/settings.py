@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'useradmin',
     'core',
     'search',
+    'activities',
     'authentication',
     'django_cleanup',
     'django.contrib.admin',

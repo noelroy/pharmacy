@@ -6,6 +6,7 @@ from authentication.models import Profile
 from usershop.forms import StockForm
 from django.contrib import messages
 from usershop.models import ShopStock
+from activities.models import Order
 # Create your views here.
 
 def shop_home(request):
@@ -85,3 +86,25 @@ def delete_stock(request, pk):
     stock.delete()
     return redirect('view_stock_shop')
 
+@login_required
+def view_orders(request):
+    orders = Order.objects.filter(from_user = request.user.profile).order_by('approval')
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        orders = orders.filter(to_user__name__icontains=querystring)
+    paginator = Paginator(orders, 10)
+    page = request.GET.get('page')
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        orders = paginator.page(1)
+    except EmptyPage:
+        orders = paginator.page(paginator.num_pages)
+    return render(request, 'usershop/view_orders.html', {'orders': orders, 'querystring': querystring})
+
+@login_required
+def delete_order(request, pk):
+    stock = Order.objects.get(pk=pk)
+    stock.delete()
+    return redirect('view_order_shop')

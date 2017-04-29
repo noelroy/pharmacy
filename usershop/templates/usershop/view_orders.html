@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Shop Panel{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <h1>Shop Panel</h1>
+</div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'usershop/partial_shop_menu.html' with active='shop' %}
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 style="margin-top: 0">Orders</h3>
+            </div>
+            <div class="col-md-7">
+                <form role="search" action="{% url 'view_order_shop' %}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="Search Company" value="{{ querystring }}">
+                        <span class="input-group-btn">
+              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <section class="orders">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Company</th>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th>Approval</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+
+                <tr>
+                    <th scope="row">{{order.pk}}</th>
+                    <td>{{order.to_user.name}}</td>
+                    <td>{{order.medicine.name}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.approval}}</td>
+                    <td>
+                        <a href="{% url 'delete_order_shop' pk=order.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Delete
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=orders %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

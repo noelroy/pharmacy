@@ -1,6 +1,15 @@
 <div class="list-group">
-  <a href="{% url 'shop_home' %}" class="list-group-item{% if active == 'home' %} active{% endif %}">Home</a>
-  <a href="{% url 'add_stock_shop' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">Add Stock</a>
-  <a href="{% url 'view_stock_shop' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">View Stock</a>
-  <a href="{% url 'view_avail_stock_shop' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">Check Stock Availability</a>
+    <a href="{% url 'shop_home' %}" class="list-group-item{% if active == 'home' %} active{% endif %}">Home</a>
+    <a href="{% url 'add_stock_shop' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">Add
+        Stock</a>
+    <a href="{% url 'view_stock_shop' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">View
+        Stock</a>
+    <a href="{% url 'view_avail_stock_shop' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">Check
+        Stock Availability</a>
+    <a href="{% url 'create_order' %}" class="list-group-item{% if active == 'order' %} active{% endif %}">Place
+        Order</a>
+    <a href="{% url 'view_order_shop' %}" class="list-group-item{% if active == 'order' %} active{% endif %}">View
+        Orders</a>
+
+
 </div>

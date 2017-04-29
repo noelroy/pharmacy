@@ -9,4 +9,7 @@ urlpatterns = [
     url(r'^stock/avail_view$', views.view_avail_stocks, name='view_avail_stock_shop'),
     url(r'^stock/(?P<pk>\d+)/edit$', views.edit_stock, name='edit_stock_shop'),
     url(r'^stock/(?P<pk>\d+)/delete$', views.delete_stock, name='delete_stock_shop'),
+
+    url(r'^order/view$', views.view_orders, name='view_order_shop'),
+    url(r'^order/(?P<pk>\d+)/delete$', views.delete_order, name='delete_order_shop'),
 ]

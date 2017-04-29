@@ -1,0 +1,32 @@
+
+<table style="margin:3%" class="table table-hover">
+    <thead>
+      <tr>
+          <th>Batch No</th>
+        <th>Company Name</th>
+        <th>Medicine Name</th>
+        <th>Price</th>
+          <th>Available Quantity</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+{% for company in company_list %}
+<tr>
+    <td>{{company.batch_no}}</td>
+<td>{{company.profile.name}}</td>
+<td>{{company.medicine.name}}</td>
+<td>{{company.price}}</td>
+<td>{{company.get_available}}</td>
+<td>
+<div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="{{company.profile.name}}" value="{{company.profile.id}}" required="required">
+        Select
+      </label>
+    </div>
+    </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>

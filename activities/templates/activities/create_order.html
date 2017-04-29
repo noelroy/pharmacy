@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop Panel{% endblock %}
+
+{% block main %}
+{% load staticfiles %}
+<script src="{% static 'js/order.js' %}"></script>
+<div class="page-header">
+    <h1>Shop Panel</h1>
+</div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'usershop/partial_shop_menu.html' with active='order' %}
+    </div>
+    <div class="col-md-9">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h3 style="margin-top: 0">Create Order</h3>
+        <form role="form" class="form-horizontal" method="post" action="{% url 'create_order' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="medicineSelect" class="col-sm-2 control-label">Select Medicine</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="medicineSelect" name="medicineSelect" required>
+                        <option hidden disabled selected value> -- select an option --</option>
+                        {% for medicine in medicines %}
+                        <option value="{{medicine.pk}}">{{medicine.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="form-group" id="collegeSelect">
+            </fieldset>
+
+            <div id="panel">
+            <div class="form-group">
+                <label for="quantity" class="col-sm-2 control-label">Quantity</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="number" id="quantity" name="quantity" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+                </div>
+        </form>
+    </div>
+</div>
+{% endblock main %}
