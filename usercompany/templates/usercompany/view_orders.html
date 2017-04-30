@@ -24,7 +24,7 @@
             <div class="col-md-7">
                 <form role="search" action="{% url 'view_order_company' %}">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="q" placeholder="Search" value="{{ querystring }}">
+                        <input type="text" class="form-control" name="q" placeholder="Search Shop" value="{{ querystring }}">
                         <span class="input-group-btn">
               <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -39,7 +39,8 @@
                     <th>#</th>
                     <th>From Shop</th>
                     <th>Medicine</th>
-                    <th>Quantity</th>
+                    <th>Quantity Asked</th>
+                    <th>Quantity Available</th>
                     <th>Approval</th>
                     <th></th>
                 </tr>
@@ -52,12 +53,15 @@
                     <td>{{order.from_user.name}}</td>
                     <td>{{order.medicine.name}}</td>
                     <td>{{order.quantity}}</td>
+                    <td>{{order.avail}}</td>
                     <td>{{order.approval}}</td>
                     <td>{% if order.is_approval_none %}
+                        {% if order.avail > order.quantity %}
                         <a href="#"
                            onclick="return confirm('Are you sure you want to Accept?')">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Accept
                         </a>
+                        {% endif %}
                         <a href="{% url 'decline_order_company' pk=order.pk %}"
                            onclick="return confirm('Are you sure you want to Decline?')">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Decline

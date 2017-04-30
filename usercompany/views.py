@@ -100,6 +100,8 @@ def view_orders(request):
         orders = paginator.page(1)
     except EmptyPage:
         orders = paginator.page(paginator.num_pages)
+    for order  in orders:
+        order.avail=order.to_user.get_avail_med_single(order.medicine.pk)
     return render(request, 'usercompany/view_orders.html', {'orders': orders, 'querystring': querystring})
 
 @login_required

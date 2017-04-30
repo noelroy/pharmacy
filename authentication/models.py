@@ -78,6 +78,18 @@ class Profile(models.Model):
         else:
             return ''
 
+    def get_avail_med_single(self,med):
+        from usershop.models import ShopStock
+        from usercompany.models import CompanyStock
+        if(self.get_type()=='Shop'):
+            stock = ShopStock.objects.filter(profile=self).filter(medicine__pk=med).values('medicine').annotate(mcount=(Sum('quantity') - Sum('sold')))
+            return int(stock[0]['mcount'])
+        elif(self.get_type()=='Company'):
+            stock = CompanyStock.objects.filter(profile=self).filter(medicine__pk=med).values('medicine').annotate(mcount=(Sum('quantity') - Sum('sold')))
+            return int(stock[0]['mcount'])
+        else:
+            return ''
+
     @staticmethod
     def get_unapproved():
         profiles = Profile.objects.filter(approved = False,user__is_staff = False).exclude(name__isnull=True).exclude(name__exact='')
