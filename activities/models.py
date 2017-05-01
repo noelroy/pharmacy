@@ -19,3 +19,15 @@ class Order(models.Model):
             return True
         else:
             return False
+
+
+class Transaction(models.Model):
+    from_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='from_user_trans')
+    to_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='to_user_trans')
+    quantity = models.PositiveIntegerField()
+    order_id = models.ForeignKey(Order, on_delete=models.SET_NULL,null=True)
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    total_price = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.from_user.name + '-' + self.to_user.name + '-' + self.medicine.name

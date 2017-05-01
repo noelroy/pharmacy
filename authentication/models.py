@@ -8,7 +8,9 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.db.models import Max
 from django.db.models import Sum
+from datetime import date
 
 # Create your models here.
 @python_2_unicode_compatible
@@ -66,29 +68,41 @@ class Profile(models.Model):
         except:
             return ''
 
+    def get_med_list(self,med):
+        from usershop.models import ShopStock
+        from usercompany.models import CompanyStock
+        if(self.get_type()=='Shop'):
+            stock = ShopStock.objects.filter(profile=self).filter(medicine__pk=med).filter(exp_date__gt = date.today())
+            return stock
+        elif(self.get_type()=='Company'):
+            stock = CompanyStock.objects.filter(profile=self).filter(medicine__pk=med).filter(exp_date__gt = date.today())
+            return stock
+        else:
+            return ''
+
     def get_avail_med(self):
         from usershop.models import ShopStock
         from usercompany.models import CompanyStock
         if(self.get_type()=='Shop'):
-            stock = ShopStock.objects.filter(profile=self).values('medicine','medicine__name').annotate(mcount=(Sum('quantity') - Sum('sold')))
+            stock = ShopStock.objects.filter(profile=self).filter(exp_date__gt = date.today()).values('medicine','medicine__name').annotate(mcount=(Sum('quantity') - Sum('sold')))
             return stock
         elif(self.get_type()=='Company'):
-            stock = CompanyStock.objects.filter(profile=self).values('medicine','medicine__name').annotate(mcount=(Sum('quantity') - Sum('sold')))
+            stock = CompanyStock.objects.filter(profile=self).filter(exp_date__gt = date.today()).values('medicine','medicine__name').annotate(mcount=(Sum('quantity') - Sum('sold')))
             return stock
         else:
             return ''
 
     def get_avail_med_single(self,med):
-        from usershop.models import ShopStock
-        from usercompany.models import CompanyStock
-        if(self.get_type()=='Shop'):
-            stock = ShopStock.objects.filter(profile=self).filter(medicine__pk=med).values('medicine').annotate(mcount=(Sum('quantity') - Sum('sold')))
-            return int(stock[0]['mcount'])
-        elif(self.get_type()=='Company'):
-            stock = CompanyStock.objects.filter(profile=self).filter(medicine__pk=med).values('medicine').annotate(mcount=(Sum('quantity') - Sum('sold')))
-            return int(stock[0]['mcount'])
-        else:
-            return ''
+        stock = self.get_med_list(med)
+        stock = stock.values('medicine').annotate(mcount=(Sum('quantity') - Sum('sold')))
+        return int(stock[0]['mcount'])
+
+    def get_avail_med_price(self,med):
+        stock = self.get_med_list(med)
+        stock = stock.aggregate(price=Max('price'))
+        if stock['price'] is None:
+            stock['price']=0;
+        return int(stock['price'])
 
     @staticmethod
     def get_unapproved():

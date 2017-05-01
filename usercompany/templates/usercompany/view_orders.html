@@ -57,7 +57,7 @@
                     <td>{{order.approval}}</td>
                     <td>{% if order.is_approval_none %}
                         {% if order.avail > order.quantity %}
-                        <a href="#"
+                        <a href="{% url 'accept_order_company' pk=order.pk %}"
                            onclick="return confirm('Are you sure you want to Accept?')">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Accept
                         </a>

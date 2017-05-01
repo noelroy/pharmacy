@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from activities.models import Order
 from authentication.models import Profile
+from datetime import date
 
 # Create your views here.
 @login_required
@@ -31,7 +32,7 @@ def create_order(request):
 @ajax_required
 def get_company_list(request):
     medicinevalue = request.GET.get('medicinevalue', None)
-    company_list = CompanyStock.objects.filter(medicine__pk=medicinevalue)
+    company_list = CompanyStock.objects.filter(medicine__pk=medicinevalue).filter(exp_date__gt = date.today())
     html = ''
     html = '{0}{1}'.format(html,
                            render_to_string('activities/company_list.html',
