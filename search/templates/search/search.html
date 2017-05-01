@@ -16,12 +16,13 @@
   <div class="row" style="padding-top: 4em; padding-bottom: 8em;">
     <div class="col-md-8 col-md-offset-2">
       <h3>Search Medicines Shops and Companies</h3>
-      <form role="search" action="{% url 'search' %}" style="padding-top: 1em;">
+      <form role="search" class="form-inline" action="{% url 'search' %}" style="padding-top: 1em;">
         <div class="input-group">
-          <input type="text" class="form-control input-lg" name="q" placeholder="Search">
-          <span class="input-group-btn">
+          <input type="text" class="form-control" name="q" placeholder="Search" value="{{ querystring }}" required>
+          <input type="text" class="form-control" name="loc" placeholder="Search Location" value="{{ search_location }}" required>
+
             <button type="submit" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span></button>
-          </span>
+
         </div>
       </form>
     </div>

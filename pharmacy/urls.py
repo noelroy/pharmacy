@@ -25,6 +25,7 @@ from search import views as search_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', core_views.home, name='home'),
+    url(r'^home/$', core_views.home_main, name='home_main'),
 #auth urls
     url(r'^login/', auth_views.login, {'template_name': 'core/cover.html'},
         name='login'),

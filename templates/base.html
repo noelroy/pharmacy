@@ -46,9 +46,8 @@
                             <span class="glyphicon glyphicon-bell"></span>
                         </a>
                     </li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     {% endif %}
-                    <li class="{% block search_active %}{% endblock %}"><a
-                            href="{% url 'search' %}">Search</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -65,6 +64,9 @@
                         </ul>
                     </li>
                     {% else %}
+                    <li class="{% block home_main %}{% endblock %}"><a
+                            href="{% url 'home_main' %}">Home</a></li>
+
                     <li class="{% block register_active %}{% endblock %}"><a
                             href="{% url 'signup' %}">Register</a></li>
 

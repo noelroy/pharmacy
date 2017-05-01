@@ -6,7 +6,8 @@ from authentication.models import Profile
 from usershop.forms import StockForm
 from django.contrib import messages
 from usershop.models import ShopStock
-from activities.models import Order, Transaction
+from activities.models import Order, Transaction, Notification
+from useradmin.models import Medicine
 # Create your views here.
 
 def shop_home(request):
@@ -125,3 +126,25 @@ def view_transactions(request):
     except EmptyPage:
         trans = paginator.page(paginator.num_pages)
     return render(request, 'usershop/view_trans.html', {'trans': trans, 'querystring': querystring})
+
+@login_required
+def view_note(request):
+    med_det = request.user.profile.get_avail_med()
+    for med in med_det:
+        if(med['mcount']<10):
+            Notification(notification_type=Notification.STOCK_LOW, from_user=request.user.profile,
+                         to_user=request.user.profile, medicine = Medicine.objects.get(pk=med['medicine'])).save()
+    trans = Notification.objects.filter(to_user=request.user.profile)
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        trans = trans.filter(from_user__name__icontains=querystring)
+    paginator = Paginator(trans, 10)
+    page = request.GET.get('page')
+    try:
+        trans = paginator.page(page)
+    except PageNotAnInteger:
+        trans = paginator.page(1)
+    except EmptyPage:
+        trans = paginator.page(paginator.num_pages)
+    return render(request, 'usershop/view_note.html', {'trans': trans, 'querystring': querystring})

@@ -6,6 +6,17 @@
 
 {% block head %}
 <link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+<style>
+.profile {
+margin-left: 40px;
+padding-left: 1em;
+border-top: 1px solid #eeeeee;
+}
+.profile a{
+text-decoration: none;
+background-color: transparent;
+}
+</style>
 {% endblock head %}
 
 {% block main %}
@@ -21,7 +32,15 @@
         <section class="profiles">
             {% for profile in unapproved_profiles %}
             <div class="profile">
-                <h2><a href="{% url 'profile' profile.user.username%}">{{profile.name}}</a></h2>
+                <h3>
+                    <address>
+                        <strong><a href="{% url 'profile' shop.user.username%}">{{profile.name}}</a></strong><br>
+                        {{profile.address.line1}}, {{profile.address.line2}}
+                        {{profile.address.city}}, {{profile.address.state}}
+                        {{profile.address.country}}, {{profile.address.pincode}}<br>
+                        <abbr title="Phone">P:</abbr> {{profile.address.contactno}}
+                    </address>
+                </h3>
             </div>
             {% endfor %}
         </section>

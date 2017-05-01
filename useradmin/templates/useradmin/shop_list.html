@@ -6,12 +6,23 @@
 
 {% block head %}
 <link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
-{% endblock head %}
+<style>
+.shop {
+margin-left: 40px;
+padding-left: 1em;
+border-top: 1px solid #eeeeee;
+}
+.shop a{
+text-decoration: none;
+background-color: transparent;
+}
+</style>
 
+{% endblock head %}
 {% block main %}
 <div class="page-header">
     <h1>Admin Panel</h1>
-  </div>
+</div>
 <div class="row" style="margin-top: 2em">
     <div class="col-md-3">
         {% include 'useradmin/partial_admin_menu.html' with active='shop' %}
@@ -21,7 +32,15 @@
         <section class="profiles">
             {% for shop in shops %}
             <div class="shop">
-                <h2><a href="{% url 'profile' shop.user.username%}">{{shop.name}}-{{shop.license_id}}</a></h2>
+                <h3>
+                    <address>
+                        <strong><a href="{% url 'profile' shop.user.username%}">{{shop.name}}</a></strong><br>
+                        {{shop.address.line1}}, {{shop.address.line2}}
+                        {{shop.address.city}}, {{shop.address.state}}
+                        {{shop.address.country}}, {{shop.address.pincode}}<br>
+                        <abbr title="Phone">P:</abbr> {{shop.address.contactno}}
+                    </address>
+                </h3>
             </div>
             {% endfor %}
         </section>
@@ -31,5 +50,5 @@
             </div>
         </div>
     </div>
-    </div>
-    {% endblock main %}
+</div>
+{% endblock main %}

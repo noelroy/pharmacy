@@ -5,9 +5,8 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from usercompany.forms import StockForm
 from django.contrib import messages
 from usercompany.models import CompanyStock
-from activities.models import Order, Transaction
+from activities.models import Order, Transaction, Notification
 from usershop.models import ShopStock
-from activities.models import Transaction
 from datetime import date
 
 
@@ -148,6 +147,7 @@ def accept_order(request, pk):
                               medicine=order.medicine,
                               total_price=(int(order.quantity) * order.to_user.get_avail_med_price(order.medicine.pk)))
     transaction.save()
+    Notification(notification_type = Notification.ORDER_ACCEPTED,from_user = order.to_user,to_user = order.from_user, order = order).save()
     return redirect('view_order_company')
 
 
@@ -156,6 +156,7 @@ def decline_order(request, pk):
     order = Order.objects.get(pk=pk)
     order.approval = False
     order.save()
+    Notification(notification_type = Notification.ORDER_DECLINED,from_user = order.to_user,to_user = order.from_user, order = order).save()
     return redirect('view_order_company')
 
 @login_required

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+        <link href="{% static 'css/cover.css' %}" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Ropa+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{% static 'css/responsiveslides.css' %}">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="{% static 'js/responsiveslides.min.js' %}"></script>
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+		  <script>
+		    // You can also use "$(window).load(function() {"
+			    $(function () {
+
+			      // Slideshow 1
+			      $("#slider1").responsiveSlides({
+			        maxwidth: 1600,
+			        speed: 600
+			      });
+			});
+		  </script>
+<style>
+    .learn-more h3 {
+  font-family: 'Shift', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+</style>
+{% endblock head %}
+{% block main %}
+<div class="clear"> </div>
+			<!--start-image-slider---->
+					<div class="image-slider">
+						<!-- Slideshow 1 -->
+					    <ul class="rslides" id="slider1">
+					      <li><img src="{% static 'images/slider-image1.jpg' %}" alt=""></li>
+					      <li><img src="{% static 'images/slider-image2.jpg' %}" alt=""></li>
+					      <li><img src="{% static 'images/slider-image1.jpg' %}" alt=""></li>
+					    </ul>
+						 <!-- Slideshow 2 -->
+					</div>
+					<!--End-image-slider---->
+		    <div class="clear"> </div>
+<br>
+<div class="clear"> </div>
+<center>
+<div class="row">
+<form class="form-inline" action="{% url 'search' %}" method="GET">
+  <div class="input-group  col-xs-4">
+    <input type="text" id="search_field" class="form-control" name="q" placeholder="Search Medicine" value="{{ querystring }}" required>
+    <!-- close the "form-group" div and start a new div -->
+  </div>
+  <!-- here we use "input-group" to get the submit tight "against" the input -->
+  <div class="input-group col-xs-4">
+    <input type="text" class="form-control" placeholder="Search Location" name="loc" value="{{ search_location }}" required>
+    <span class="input-group-btn">
+<button type="submit" id="search_button" class="btn btn-default">Search</button>
+      </span>
+  </div>
+</form>
+	</div>
+	</center>
+<div class="clear"> </div>
+<center>
+		    <div class="content-grids">
+		    	<div class="wrap">
+		    	<div class="section group">
+				<div class="listview_1_of_3 images_1_of_3">
+					<div class="listimg listimg_1_of_2">
+						  <img src="{% static 'images/grid-img1.png' %}">
+					</div>
+					<div class="text list_1_of_2">
+						  <h3>Login for All</h3>
+						  <p>Need More info?</p>
+						  <div class="button"><span><a href="{% url 'login' %}">Login Now</a></span></div>
+					</div>
+				</div>
+				<div class="listview_1_of_3 images_1_of_3">
+					<div class="listimg listimg_1_of_2">
+						  <img src="{% static 'images/grid-img2.png' %}">
+					</div>
+					<div class="text list_1_of_2">
+						  <h3>24x7 Service</h3>
+						  <p>Round the clock service.</p>
+						  <div class="button"><span></span></div>
+				     </div>
+				</div>
+				<div class="listview_1_of_3 images_1_of_3">
+					<div class="listimg listimg_1_of_2">
+						  <img src="{% static 'images/grid-img3.png' %}">
+					</div>
+					<div class="text list_1_of_2">
+						  <h3>Join Us Now</h3>
+						  <p>Need More info?</p>
+						  <div class="button"><span><a href="{% url 'signup' %}">Explore</a></span></div>
+				    </div>
+				</div>
+			</div>
+		    </div>
+		   </div>
+    </center>
+		   <div class="wrap">
+{% endblock main %}

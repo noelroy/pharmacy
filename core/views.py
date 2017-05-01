@@ -33,6 +33,9 @@ def home(request):
     else:
         return render(request, 'core/cover.html')
 
+def home_main(request):
+        return render(request, 'core/main.html')
+
 
 def profile(request, username):
     page_user = get_object_or_404(User, username=username)

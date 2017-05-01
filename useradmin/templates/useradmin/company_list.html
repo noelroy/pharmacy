@@ -6,6 +6,17 @@
 
 {% block head %}
 <link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+<style>
+.shop {
+margin-left: 40px;
+padding-left: 1em;
+border-top: 1px solid #eeeeee;
+}
+.shop a{
+text-decoration: none;
+background-color: transparent;
+}
+</style>
 {% endblock head %}
 
 {% block main %}
@@ -21,7 +32,15 @@
         <section class="profiles">
             {% for company in companies %}
             <div class="shop">
-                <h2><a href="{% url 'profile' company.user.username%}">{{company.name}}-{{company.license_id}}</a></h2>
+                <h3>
+                    <address>
+                        <strong><a href="{% url 'profile' company.user.username%}">{{company.name}}</a></strong><br>
+                        {{company.address.line1}}, {{company.address.line2}}
+                        {{company.address.city}}, {{company.address.state}}
+                        {{company.address.country}}, {{company.address.pincode}}<br>
+                        <abbr title="Phone">P:</abbr> {{company.address.contactno}}
+                    </address>
+                </h3>
             </div>
             {% endfor %}
         </section>

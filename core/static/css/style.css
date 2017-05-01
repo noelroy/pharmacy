@@ -1,0 +1,100 @@
+
+.learn-more {
+  background-color: #f7f7f7;
+}
+
+.learn-more h3 {
+  font-family: 'Shift', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.learn-more a {
+  color: #00b0ff;
+}
+
+/*-----content-grids-----*/
+.content-grids{
+	background:#fefefe;
+	padding: 10px 0px;
+	margin-left: 4%;
+}
+/*  GRID OF THREE   ============================================================================= */
+.section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+.group:before,
+.group:after {
+    content:"";
+    display:table;
+}
+.group:after {
+    clear:both;
+}
+.group {
+    zoom:1;
+}
+.listview_1_of_3{
+	display: block;
+	float:left;
+	margin: 0% 0 0% 1.6%;
+	background: #F1F6F9;
+}
+.listimg{
+	display: block;
+	float:left;
+}
+.text{
+	display: block;
+	float:left;
+	margin: 0% 0 0% 3.6%;
+}
+.listview_1_of_3:first-child { margin-left: 0; } /* all browsers except IE6 and lower */
+
+.images_1_of_3 {
+	width: 29.2%;
+	padding:1.5%;
+	border-radius: 1.1em;
+}
+.listimg_1_of_2{
+	width: 32.2%;
+}
+.list_1_of_2 {
+	width: 64.2%;
+	margin-top: 5px;
+}
+.images_1_of_3  img {
+	max-width:100%;
+	display:block;
+}
+.list_1_of_2  h3{
+	color:#3391E7;
+	margin-bottom:0.2em;
+	margin-top:0;
+	font-size: 2em;
+	font-family: 'Ropa Sans', sans-serif;
+	font-weight : normal;
+	letter-spacing: -1px;
+}
+.list_1_of_2  p{
+	font-size:0.8125em;
+	color: #3391E7;
+	line-height: 1.5em;
+	font-family: Arial, "Helvetica Neue", "Helvetica", Tahoma, Verdana, sans-serif;
+	padding:0;
+}
+.list_1_of_2 .button{
+	line-height:1.9em;
+	margin-top:0.2em;
+}
+.list_1_of_2 .button a{
+		font-family: 'Ropa Sans', sans-serif;
+		color: rgb(139, 139, 139);
+		font-size: 1em;
+}
+.list_1_of_2 .button a:hover{
+        text-decoration:none;
+        color:#3391E7;
+}
