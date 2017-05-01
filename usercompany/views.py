@@ -7,6 +7,7 @@ from django.contrib import messages
 from usercompany.models import CompanyStock
 from activities.models import Order, Transaction
 from usershop.models import ShopStock
+from activities.models import Transaction
 from datetime import date
 
 
@@ -156,3 +157,20 @@ def decline_order(request, pk):
     order.approval = False
     order.save()
     return redirect('view_order_company')
+
+@login_required
+def view_transactions(request):
+    trans = Transaction.objects.filter(from_user=request.user.profile).order_by('trans_date')
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        trans = trans.filter(to_user__name__icontains=querystring)
+    paginator = Paginator(trans, 10)
+    page = request.GET.get('page')
+    try:
+        trans = paginator.page(page)
+    except PageNotAnInteger:
+        trans = paginator.page(1)
+    except EmptyPage:
+        trans = paginator.page(paginator.num_pages)
+    return render(request, 'usercompany/view_trans.html', {'trans': trans, 'querystring': querystring})

@@ -12,4 +12,6 @@ urlpatterns = [
 
     url(r'^order/view$', views.view_orders, name='view_order_shop'),
     url(r'^order/(?P<pk>\d+)/delete$', views.delete_order, name='delete_order_shop'),
+
+    url(r'^transactions/view$', views.view_transactions, name='view_transactions_shop'),
 ]

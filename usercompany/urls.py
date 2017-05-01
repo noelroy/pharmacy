@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^order/view$', views.view_orders, name='view_order_company'),
     url(r'^order/(?P<pk>\d+)/accept', views.accept_order, name='accept_order_company'),
     url(r'^order/(?P<pk>\d+)/decline$', views.decline_order, name='decline_order_company'),
+
+    url(r'^transactions/view$', views.view_transactions, name='view_transactions_company'),
 ]

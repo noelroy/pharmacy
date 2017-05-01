@@ -6,7 +6,7 @@ from authentication.models import Profile
 from usershop.forms import StockForm
 from django.contrib import messages
 from usershop.models import ShopStock
-from activities.models import Order
+from activities.models import Order, Transaction
 # Create your views here.
 
 def shop_home(request):
@@ -108,3 +108,20 @@ def delete_order(request, pk):
     stock = Order.objects.get(pk=pk)
     stock.delete()
     return redirect('view_order_shop')
+
+@login_required
+def view_transactions(request):
+    trans = Transaction.objects.filter(to_user=request.user.profile).order_by('trans_date')
+    querystring = ''
+    if 'q' in request.GET:
+        querystring = request.GET.get('q').strip()
+        trans = trans.filter(from_user__name__icontains=querystring)
+    paginator = Paginator(trans, 10)
+    page = request.GET.get('page')
+    try:
+        trans = paginator.page(page)
+    except PageNotAnInteger:
+        trans = paginator.page(1)
+    except EmptyPage:
+        trans = paginator.page(paginator.num_pages)
+    return render(request, 'usershop/view_trans.html', {'trans': trans, 'querystring': querystring})

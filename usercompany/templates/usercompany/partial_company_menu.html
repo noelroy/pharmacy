@@ -6,7 +6,9 @@
         Stock</a>
     <a href="{% url 'view_avail_stock_company' %}" class="list-group-item{% if active == 'stock' %} active{% endif %}">Check
         Stock Availability</a>
-    <a href="{% url 'view_order_company' %}" class="list-group-item{% if active == 'order' %} active{% endif %}">View Orders</a>
-
+    <a href="{% url 'view_order_company' %}" class="list-group-item{% if active == 'order' %} active{% endif %}">View
+        Orders</a>
+    <a href="{% url 'view_transactions_company' %}" class="list-group-item{% if active == 'trans' %} active{% endif %}">View
+        Transactions</a>
 
 </div>

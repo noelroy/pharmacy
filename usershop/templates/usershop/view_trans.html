@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}Shop Panel{% endblock %}
+
+{% block head %}
+<link href="{% static 'css/useradmin.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+<div class="page-header">
+    <h1>Shop Panel</h1>
+</div>
+<div class="row" style="margin-top: 2em">
+    <div class="col-md-3">
+        {% include 'usershop/partial_shop_menu.html' with active='shop' %}
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 style="margin-top: 0">Transactions</h3>
+            </div>
+            <div class="col-md-7">
+                <form role="search" action="{% url 'view_transactions_shop' %}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="Search Shop" value="{{ querystring }}">
+                        <span class="input-group-btn">
+              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <section class="stocks">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Company</th>
+                    <th>Transaction Date</th>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stock in trans %}
+
+                <tr>
+                    <th scope="row">{{stock.pk}}</th>
+                    <td>{{stock.from_user.name}}</td>
+                    <td>{{stock.trans_date}}</td>
+                    <td>{{stock.medicine.name}}</td>
+                    <td>{{stock.quantity}}</td>
+                    <td>{{stock.total_price}}</td>
+                </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'paginator.html' with paginator=trans %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}
